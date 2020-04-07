@@ -1,10 +1,22 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import { StarsDisplay } from './StarsDisplay'
 import { NumberId } from './NumberId'
 import { utils } from './utils';
 import { PlayAgain } from './PlayAgain';
+import { useGameState } from './customHook';
 
 export const Game = (props) => {
+
+    const {
+        stars,
+        availableNums,
+        candidateNums,
+        secondsLeft,
+        setGameState
+    } = useGameState();
+
+
+/* Moved to custom hooks
   const [stars, setStars] = useState(utils.random(1,9));
   const [availableNums, setAvailableNums] = useState(utils.range(1, 9));
   const [candidateNums, setCandidateNums] = useState([]);
@@ -17,7 +29,7 @@ export const Game = (props) => {
         }, 1000);
         return () => clearTimeout(timerId);
     }
-  });
+  });*/
   
   const candidatesAreWrong = utils.sum(candidateNums) > stars;
   const gameStatus = availableNums.length === 0 ? "won" : secondsLeft === 0 ? "lost" : "active";
@@ -48,6 +60,9 @@ export const Game = (props) => {
         status === 'available' ? candidateNums.concat(number):
         candidateNums.filter(cn => cn !== number);
 
+    setGameState(newCandidatesNums);
+
+    /* moved to custom hooks
     if(utils.sum(newCandidatesNums) !== stars){
         setCandidateNums(newCandidatesNums);
     }else{
@@ -57,7 +72,7 @@ export const Game = (props) => {
         setStars(utils.randomSumIn(newAvialableNums, 9));
         setAvailableNums(newAvialableNums);
         setCandidateNums([]);
-    }
+    }*/
   }
 
 
