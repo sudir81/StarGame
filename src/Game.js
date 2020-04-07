@@ -14,32 +14,9 @@ export const Game = (props) => {
         secondsLeft,
         setGameState
     } = useGameState();
-
-
-/* Moved to custom hooks
-  const [stars, setStars] = useState(utils.random(1,9));
-  const [availableNums, setAvailableNums] = useState(utils.range(1, 9));
-  const [candidateNums, setCandidateNums] = useState([]);
-  const [secondsLeft, setSecondsLeft] = useState(10);
-
-  useEffect(() => {
-    if(secondsLeft > 0 && availableNums.length > 0) {
-        const timerId = setTimeout(() => {
-            setSecondsLeft(secondsLeft - 1);
-        }, 1000);
-        return () => clearTimeout(timerId);
-    }
-  });*/
   
   const candidatesAreWrong = utils.sum(candidateNums) > stars;
   const gameStatus = availableNums.length === 0 ? "won" : secondsLeft === 0 ? "lost" : "active";
-
-
-//   const resetGame = () => {
-//       setStars(utils.random(1, 9));
-//       setAvailableNums(utils.range(1,9));
-//       setCandidateNums([]);
-//   }
 
   const numberStatus = number => {
     if(!availableNums.includes(number)){
@@ -61,18 +38,6 @@ export const Game = (props) => {
         candidateNums.filter(cn => cn !== number);
 
     setGameState(newCandidatesNums);
-
-    /* moved to custom hooks
-    if(utils.sum(newCandidatesNums) !== stars){
-        setCandidateNums(newCandidatesNums);
-    }else{
-        const newAvialableNums = availableNums.filter(
-            n => !newCandidatesNums.includes(n)
-        );
-        setStars(utils.randomSumIn(newAvialableNums, 9));
-        setAvailableNums(newAvialableNums);
-        setCandidateNums([]);
-    }*/
   }
 
 
